@@ -1,0 +1,109 @@
+-- Supported values for orientation:
+-- portrait, portraitUpsideDown, landscapeLeft, landscapeRight
+
+settings = {
+    
+    orientation = {
+        --initial launch orientation
+        default = "landscapeRight",
+        --table of allowed options for auto-orientation
+        supported = { "landscapeRight", "landscapeLeft" }
+    },
+    
+    iphone = {
+        plist = {
+            UIApplicationExitsOnSuspend = false,
+            UIStatusBarHidden = true,
+            UIPrerenderedIcon = true, -- set to false for "shine" overlay
+            CFBundleDisplayName = "eVubble" ,
+            --table of icon files 
+            CFBundleIconFiles = {
+                "Icon.png" , 
+                "Icon@2x.png" , 
+                "Icon-72.png" ,
+                "Icon-76.png" ,
+                "Icon-76@2x.png" ,
+                "Icon-60@2x.png" ,
+            },
+    
+            -- Restrict older iOS versions
+            MinimumOSVersion = "6.0",
+
+            CFBundleShortVersionString = "1.0.1",
+
+            UIAppFonts =
+            {
+                "Marker Felt.ttf",
+            },
+        },
+    },
+
+    android = {
+        googlePlayGamesAppId = "",  --removed --long App ID number
+
+        usesPermissions =
+        {
+            "com.android.vending.BILLING",
+            "android.permission.INTERNET",
+            "android.permission.WRITE_EXTERNAL_STORAGE",
+            "android.permission.ACCESS_NETWORK_STATE",
+        },
+    },
+
+    plugins = {
+        --key is the name passed to the Lua "require()"
+        ["CoronaProvider.gameNetwork.google"] =
+        {
+            --required
+            publisherId = "com.coronalabs",
+            supportedPlatforms =  {android = true } ,
+        },
+
+        ["plugin.google.iap.v3"] =
+        {
+            publisherId = "com.coronalabs",
+            supportedPlatforms = { android=true }
+        },
+
+        ["CoronaProvider.gameNetwork.apple"] =
+        {
+            publisherId = "com.coronalabs",
+            supportedPlatforms = { iphone=true, ["iphone-sim"]=true },
+        },
+
+        ["CoronaProvider.ads.vungle"] = {
+            publisherId = "com.vungle"
+        },
+    },
+
+    excludeFiles =
+    {
+        -- Files to exclude for all platforms
+        all = { 
+            "eVubble.sublime-project",
+            "eVubble.sublime-workspace",
+            "scenes/eVubble.sublime-workspace",
+        },
+        -- Exclude all Android icon files for iOS builds
+        iphone = {
+            "Icon-hdpi.png",
+            "Icon-ldpi.png",
+            "Icon-mdpi.png",
+            "Icon-xhdpi.png",
+        },
+        -- Exclude all iOS icon and launch image files for Android builds
+        android = {
+            "Default-Landscape-568h@2x.png",
+            "Default-Landscape-667h@2x.png",
+            "Default-Landscape-736h@3x.png",
+            "Default-Landscape.png",
+            "Default-Landscape@2x.png",
+            "Icon-60@2x.png",
+            "Icon-72.png",
+            "Icon-76.png",
+            "Icon-76@2x.png",
+            "Icon.png",
+            "Icon@2x.png",
+        }
+    },
+}
